@@ -14,6 +14,9 @@ function App() {
   const [won, setWon] = useState(false);
   const [showWinner, setShowWinner] = useState(false);
   const [prize, setPrize] = useState("");
+  const [SFX_WIN] = useState(new Audio("/media/kidscheer.mp3"));
+  const [SFX_DRUM_ROLL] = useState(new Audio("/media/drumroll.mp3"));
+
   const [refresh, setRefresh] = useState(false);
 
   const sleep = (ms) => {
@@ -36,12 +39,19 @@ function App() {
       await sleep(time);
     }
     // expected that when the loop breaks or get's satisfied, we'll display the winner
+    SFX_DRUM_ROLL.pause();
+    SFX_DRUM_ROLL.currentTime = 0;
+    SFX_WIN.play();
     setIsStart(false);
     setWon(true);
   };
 
   const start = async () => {
     setWon(false);
+    SFX_DRUM_ROLL.play();
+    SFX_WIN.pause();
+    SFX_WIN.currentTime = 0;
+    await sleep(500);
     // let incOvertime = 100;
     // const interval = setInterval(async () => {
     //   let _winner = names[Math.floor(Math.random() * names.length)];
@@ -49,7 +59,6 @@ function App() {
     // }, 100);
 
     startRaffle();
-    SFX_WIN;
 
     // Stop the interval after 5 seconds
     // const duration = setTimeout(() => {
@@ -61,6 +70,12 @@ function App() {
     // return () => {
     //   clearTimeout(duration);
     // };
+  };
+
+  const Reset = () => {
+    setWinner({
+      FirstName: Payload.Event.Name,
+    });
   };
 
   useEffect(() => {

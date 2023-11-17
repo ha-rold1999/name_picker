@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="tblData" style="text-align: center;">
+        <tr style="background-color: aquamarine;">
+            <th style="width: 200px;">Names</th>
+            <th style="width: 200px;">Email</th>
+            <th style="width: 200px;">Country</th>
+        </tr>
+        <tr style="background-color: pink;">
+            <td>John Doe</td>
+            <td>john@gmail.com</td>
+            <td>USA</td>
+        </tr>
+        <tr>
+            <td>Michael Addison</td>
+            <td>michael@gmail.com</td>
+            <td>UK</td>
+        </tr>
+        <tr>
+            <td>Sam Farmer</td>
+            <td>sam@gmail.com</td>
+            <td>France</td>
+        </tr>
+    </table>
+    <button onclick="fnExcelReport()">Export Table Data To Excel File</button>
+    <script>
+        function exportTableToExcel(tableID, filename = ''){
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+        
+        // Specify file name
+        filename = filename?filename+'.xls':'excel_data.xls';
+        
+        // Create download link element
+        downloadLink = document.createElement("a");
+        
+        document.body.appendChild(downloadLink);
+        
+        if(navigator.msSaveOrOpenBlob){
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob( blob, filename);
+        }else{
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+        
+            // Setting the file name
+            downloadLink.download = filename;
+            
+            //triggering the function
+            downloadLink.click();
+        }
+    }
+
+    function fnExcelReport()
+    {
+             var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+             var textRange; var j=0;
+          tab = document.getElementById('tblData'); // id of table
+
+
+          for(j = 0 ; j < tab.rows.length ; j++) 
+          {     
+                tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                //tab_text=tab_text+"</tr>";
+          }
+
+          tab_text=tab_text+"</table>";
+          tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+          tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                      tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+               var ua = window.navigator.userAgent;
+              var msie = ua.indexOf("MSIE "); 
+
+                 if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                    {
+                           txtArea1.document.open("txt/html","replace");
+                           txtArea1.document.write(tab_text);
+                           txtArea1.document.close();
+                           txtArea1.focus(); 
+                            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+                          }  
+                  else                 //other browser not tested on IE 11
+                      sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+
+                      return (sa);
+                            }
+    </script>
+</body>
+</html>

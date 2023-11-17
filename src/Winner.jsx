@@ -29,7 +29,9 @@ export default function Winner({
 
       return updatedNames;
     });
-
+    // reset the winner
+    reset();
+    // set the won to false
     setWon(false);
     setShowWinner(false);
     setWinner(undefined);
