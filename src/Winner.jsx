@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Confetti from "react-confetti";
 
-export default function Winner({ winner, setWon, prize }) {
+export default function Winner({ winner, setWon, prize, reset }) {
   const data = JSON.parse(localStorage.getItem("activeList"));
   const [names, setName] = useState([...data]);
 
@@ -19,10 +19,12 @@ export default function Winner({ winner, setWon, prize }) {
         winner,
       ];
       localStorage.setItem("winnersList", JSON.stringify(winners));
-      
+
       return updatedNames;
     });
-
+    // reset the winner
+    reset();
+    // set the won to false
     setWon(false);
   };
   return (
