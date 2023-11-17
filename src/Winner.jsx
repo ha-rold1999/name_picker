@@ -2,8 +2,15 @@
 
 import { useState } from "react";
 import Confetti from "react-confetti";
+import { Payload } from "./Data";
 
-export default function Winner({ winner, setWon, prize }) {
+export default function Winner({
+  winner,
+  setShowWinner,
+  prize,
+  setWon,
+  setWinner,
+}) {
   const data = JSON.parse(localStorage.getItem("activeList"));
   const [names, setName] = useState([...data]);
 
@@ -19,11 +26,13 @@ export default function Winner({ winner, setWon, prize }) {
         winner,
       ];
       localStorage.setItem("winnersList", JSON.stringify(winners));
-      
+
       return updatedNames;
     });
 
     setWon(false);
+    setShowWinner(false);
+    setWinner(undefined);
   };
   return (
     <>
@@ -31,7 +40,9 @@ export default function Winner({ winner, setWon, prize }) {
       <div className="flex flex-col justify-center items-center space-y-1">
         <div className="text-2xl font-bold">{prize} Winner</div>
         <div className="text-7xl font-bold pb-8">
-          {winner.FirstName} {winner.LastName}
+          {winner
+            ? `${winner.FirstName} ${winner.LastName}`
+            : Payload.Event.Name}
         </div>
         <button
           className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold"
