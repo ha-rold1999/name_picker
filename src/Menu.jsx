@@ -3,6 +3,7 @@ import Prizes from "./Prizes";
 import AddPrize from "./AddPrize";
 import { Payload } from "./Data";
 import { FetchDatabase } from "./Util/Database";
+import ExcelExport from "./ExcelExport";
 
 export default function Menu({
   setAddPrize,
@@ -17,9 +18,9 @@ export default function Menu({
 }) {
   const saveData = async () => {
     // fetch data from database
-    let payload = await FetchDatabase();
-    console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
-    localStorage.setItem("activeList", JSON.stringify(payload.attendees));
+    //let payload = await FetchDatabase();
+    //console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
+    localStorage.setItem("activeList", JSON.stringify(Payload.Attendees));
     localStorage.setItem("winnersList", JSON.stringify([]));
     localStorage.setItem("prizeList", JSON.stringify([]));
   };
@@ -43,6 +44,7 @@ export default function Menu({
         >
           Get Attendies
         </button>
+        <ExcelExport />
       </div>
 
       {!addPrize ? (

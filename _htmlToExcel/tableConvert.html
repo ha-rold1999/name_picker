@@ -8,24 +8,9 @@
 <body>
     <table id="tblData" style="text-align: center;">
         <tr style="background-color: aquamarine;">
-            <th style="width: 200px;">Names</th>
+            <th style="width: 200px;">Last Name</th>
+            <th style="width: 200px;">First Name</th>
             <th style="width: 200px;">Email</th>
-            <th style="width: 200px;">Country</th>
-        </tr>
-        <tr style="background-color: pink;">
-            <td>John Doe</td>
-            <td>john@gmail.com</td>
-            <td>USA</td>
-        </tr>
-        <tr>
-            <td>Michael Addison</td>
-            <td>michael@gmail.com</td>
-            <td>UK</td>
-        </tr>
-        <tr>
-            <td>Sam Farmer</td>
-            <td>sam@gmail.com</td>
-            <td>France</td>
         </tr>
     </table>
     <button onclick="fnExcelReport()">Export Table Data To Excel File</button>
@@ -96,6 +81,32 @@
 
                       return (sa);
                             }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                        // Retrieve data from localStorage
+                        const storedData = JSON.parse(localStorage.getItem('activeList')) || [];
+
+                        // Reference to the table
+                        const table = document.getElementById('tblData');
+
+                        // Function to populate the table with data
+                        function populateTable(data) {
+                            data.forEach(item => {
+                                console.log(item)
+                                const row = table.insertRow();
+                                const cell1 = row.insertCell(0);
+                                const cell2 = row.insertCell(1);
+                                const cell3 = row.insertCell(2);
+
+                                cell1.innerHTML = item.FirstName;
+                                cell2.innerHTML = item.LastName;
+                                cell3.innerHTML = item.Email;
+                            });
+                        }
+
+                        // Populate the table with stored data
+                        populateTable(storedData);
+                    });
     </script>
 </body>
 </html>
