@@ -13,13 +13,6 @@ export default function Prizes({
   setRefresh,
   refresh,
 }) {
-  const saveData = async () => {
-    let payload = await FetchDatabase();
-    console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
-    localStorage.setItem("activeList", JSON.stringify(payload.attendees));
-    localStorage.setItem("winnersList", JSON.stringify([]));
-  };
-
   const refreshList = () => {
     const list = localStorage.getItem("activeList");
     const winners = localStorage.getItem("winnersList");
@@ -35,7 +28,6 @@ export default function Prizes({
     const refreshList = [...JSON.parse(list), ...newList];
 
     localStorage.setItem("activeList", JSON.stringify(refreshList));
-    localStorage.setItem("winnersList", JSON.stringify([]));
     setRefresh(!refresh);
   };
 
