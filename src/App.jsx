@@ -27,13 +27,38 @@ function App() {
     // 50 - ~6.2 seconds
     // 60 - ~8.5 seconds
     // 80 - ~14.3 seconds
-    let limit = 60;
+    let limit = 200; // displayed on screen
+    let divisibleBy2 = 0;
+    let divisibleBy2_2 = 0;
+    let displayed = 0;
+    let _alreadyDisplayed = [];
 
-    for (let time = 10; time < 10000; time += 4) {
-      if (limit-- == 0) break;
+    for (let time = 100; time < 10000; time) {
       let _winner = names[Math.floor(Math.random() * names.length)];
       // check if the previous winner is currently selected in random
-      if (winner === _winner) continue;
+      //if (winner === _winner) continue;
+      if (_alreadyDisplayed.includes(_winner.id)) {
+        // check if _alreadyDisplayed is full, if yes, reset.
+        if (_alreadyDisplayed.length === names.length) {
+          _alreadyDisplayed = [];
+          console.log("_alreadyDisplayed was reset");
+          continue;
+        }
+        continue;
+      }
+
+      if (limit-- == 0) break;
+      if (divisibleBy2++ % 2 == 0) {
+        if (divisibleBy2_2++ % 2 == 0) {
+          time += 1;
+        }
+      }
+      console.log(
+        ++displayed + " - " + _winner.firstName + " " + _winner.lastName
+      );
+
+      _alreadyDisplayed.push(_winner.id);
+
       setWinner(_winner);
       // increment the delay overtime
       await sleep(time);
@@ -93,7 +118,8 @@ function App() {
     <div
       className={
         "h-screen flex bg-green-200 justify-center items-center flex-col"
-      }>
+      }
+    >
       {prize.length == 0 ? (
         <Prizes
           setPrize={setPrize}
@@ -117,7 +143,8 @@ function App() {
               <button
                 onClick={() => {
                   setPrize("");
-                }}>
+                }}
+              >
                 Set New Pize
               </button>
               <div>{prize}</div>

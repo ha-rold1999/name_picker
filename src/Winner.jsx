@@ -10,6 +10,7 @@ export default function Winner({
   prize,
   setWon,
   setWinner,
+  reset,
 }) {
   const data = JSON.parse(localStorage.getItem("activeList"));
   const [names, setName] = useState([...data]);
@@ -17,7 +18,7 @@ export default function Winner({
   const restart = () => {
     setName((names) => {
       // Use the previous state to avoid potential issues with async updates
-      const updatedNames = names.filter((name) => name.Id !== winner.Id);
+      const updatedNames = names.filter((name) => name.id !== winner.id);
 
       // Update local storage with the filtered names
       localStorage.setItem("activeList", JSON.stringify(updatedNames));
@@ -30,7 +31,7 @@ export default function Winner({
       return updatedNames;
     });
     // reset the winner
-    reset();
+    //reset();
     // set the won to false
     setWon(false);
     setShowWinner(false);
@@ -43,12 +44,13 @@ export default function Winner({
         <div className="text-2xl font-bold">{prize} Winner</div>
         <div className="text-7xl font-bold pb-8">
           {winner
-            ? `${winner.FirstName} ${winner.LastName}`
+            ? `${winner.firstName} ${winner.lastName}`
             : Payload.Event.Name}
         </div>
         <button
           className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold"
-          onClick={() => restart()}>
+          onClick={() => restart()}
+        >
           Next
         </button>
       </div>

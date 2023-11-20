@@ -1,4 +1,5 @@
 import { Payload } from "./Data";
+import { FetchDatabase } from "./Util/Database";
 
 /* eslint-disable react/prop-types */
 export default function Prizes({
@@ -8,8 +9,10 @@ export default function Prizes({
   setRefresh,
   refresh,
 }) {
-  const saveData = () => {
-    localStorage.setItem("activeList", JSON.stringify(Payload.Attendees));
+  const saveData = async () => {
+    let payload = await FetchDatabase();
+    console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
+    localStorage.setItem("activeList", JSON.stringify(payload.attendees));
     localStorage.setItem("winnersList", JSON.stringify([]));
   };
 
@@ -30,7 +33,8 @@ export default function Prizes({
       <select
         onChange={(e) => {
           setPrize(e.target.value);
-        }}>
+        }}
+      >
         <option value="" disabled selected>
           Select a Prize
         </option>
@@ -43,14 +47,16 @@ export default function Prizes({
       <button
         onClick={() => {
           saveData();
-        }}>
-        Get Attendies
+        }}
+      >
+        Get Attendees
       </button>
       <button
         onClick={() => {
           refreshList();
-        }}>
-        Refresh Attendies
+        }}
+      >
+        Refresh Attendees
       </button>
       <div className="text-sm text-green-200">test</div>
     </div>

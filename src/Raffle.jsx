@@ -8,7 +8,7 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
       <div>
         <div className="text-6xl font-extrabold mb-[30px]">
           {winner
-            ? `${winner.FirstName} ${winner.LastName}`
+            ? `${winner.firstName} ${winner.lastName}`
             : Payload.Event.Name}
         </div>
       </div>
@@ -20,7 +20,8 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
               onClick={() => {
                 start();
                 setIsStart(true);
-              }}>
+              }}
+            >
               Start
             </button>
           )}
