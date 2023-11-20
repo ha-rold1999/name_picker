@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import Winner from "./Winner";
-import Raffle from "./Raffle";
-import Prizes from "./Prizes";
-import { Payload } from "./Data";
+import Menu from "./Menu";
+import Random from "./Random";
 
 function App() {
   const data = JSON.parse(localStorage.getItem("activeList"));
   const names = data ? [...data] : [];
-  const prizes = ["iPhone", "TV", "House & Lot"];
+  const prizes = JSON.parse(localStorage.getItem("prizeList"));
+  const durations = [50, 60, 80, 100];
 
   const [winner, setWinner] = useState(undefined);
+  const [addPrize, setAddPrize] = useState(false);
+  const [limiter, setLimit] = useState(0);
   const [isStart, setIsStart] = useState(false);
   const [won, setWon] = useState(false);
   const [showWinner, setShowWinner] = useState(false);
@@ -77,30 +78,8 @@ function App() {
     SFX_WIN.pause();
     SFX_WIN.currentTime = 0;
     await sleep(500);
-    // let incOvertime = 100;
-    // const interval = setInterval(async () => {
-    //   let _winner = names[Math.floor(Math.random() * names.length)];
-    //   setWinner(_winner);
-    // }, 100);
 
     startRaffle();
-
-    // Stop the interval after 5 seconds
-    // const duration = setTimeout(() => {
-    //   clearInterval(interval);
-    //   setIsStart(false);
-    //   setWon(true);
-    //   console.log(winner);
-    // }, 5000);
-    // return () => {
-    //   clearTimeout(duration);
-    // };
-  };
-
-  const Reset = () => {
-    setWinner({
-      FirstName: Payload.Event.Name,
-    });
   };
 
   useEffect(() => {
@@ -120,47 +99,35 @@ function App() {
         "h-screen flex bg-green-200 justify-center items-center flex-col"
       }
     >
-      {prize.length == 0 ? (
-        <Prizes
+      {prize.length > 0 && limiter > 0 ? (
+        <Random
+          winner={winner}
+          setWinner={setWinner}
+          setShowWinner={setShowWinner}
+          prize={prize}
+          setWon={setWon}
           setPrize={setPrize}
-          prizes={prizes}
-          attendies={names.length}
-          setRefresh={setRefresh}
-          refresh={refresh}
+          setLimit={setLimit}
+          names={names}
+          isStart={isStart}
+          start={start}
+          setIsStart={setIsStart}
+          won={won}
+          showWinner={showWinner}
         />
       ) : (
         <>
-          {showWinner ? (
-            <Winner
-              winner={winner}
-              setWinner={setWinner}
-              setShowWinner={setShowWinner}
-              prize={prize}
-              setWon={setWon}
-            />
-          ) : (
-            <>
-              <button
-                onClick={() => {
-                  setPrize("");
-                }}
-              >
-                Set New Pize
-              </button>
-              <div>{prize}</div>
-              {names.length > 0 ? (
-                <Raffle
-                  winner={winner}
-                  isStart={isStart}
-                  start={start}
-                  setIsStart={setIsStart}
-                  won={won}
-                />
-              ) : (
-                <div>No Participants</div>
-              )}
-            </>
-          )}
+          <Menu
+            setAddPrize={setAddPrize}
+            addPrize={addPrize}
+            setPrize={setPrize}
+            setLimit={setLimit}
+            durations={durations}
+            prizes={prizes}
+            names={names}
+            setRefresh={setRefresh}
+            refresh={refresh}
+          />
         </>
       )}
     </div>

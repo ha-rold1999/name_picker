@@ -1,9 +1,13 @@
 import { Payload } from "./Data";
 import { FetchDatabase } from "./Util/Database";
+import DurationOptions from "./DurationOptions";
+import PrizeOptions from "./PrizeOptions";
 
 /* eslint-disable react/prop-types */
 export default function Prizes({
   setPrize,
+  setLimit,
+  durations,
   prizes,
   attendies,
   setRefresh,
@@ -28,37 +32,21 @@ export default function Prizes({
   };
 
   return (
-    <div className="flex flex-col">
-      <div>{attendies}</div>
-      <select
-        onChange={(e) => {
-          setPrize(e.target.value);
-        }}
-      >
-        <option value="" disabled selected>
-          Select a Prize
-        </option>
-        {prizes.map((p, index) => (
-          <option value={p} key={index}>
-            {p}
-          </option>
-        ))}
-      </select>
-      <button
-        onClick={() => {
-          saveData();
-        }}
-      >
-        Get Attendees
-      </button>
-      <button
-        onClick={() => {
-          refreshList();
-        }}
-      >
-        Refresh Attendees
-      </button>
-      <div className="text-sm text-green-200">test</div>
+    <div className="flex flex-col space-y-2 items-center  w-1/2">
+      <div className="flex flex-row space-x-2">
+        <div className="text-lg font-bold">Attendies: {attendies}</div>
+        <button
+          onClick={() => {
+            refreshList();
+          }}
+          className="bg-green-300 p-1 rounded-lg"
+        >
+          Refresh Attendies
+        </button>
+      </div>
+
+      <PrizeOptions setPrize={setPrize} prizes={prizes} />
+      <DurationOptions setLimit={setLimit} durations={durations} />
     </div>
   );
 }
