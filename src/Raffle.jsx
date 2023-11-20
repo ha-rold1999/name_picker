@@ -7,15 +7,15 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
     <div className="flex justify-center items-center flex-col space-y-2">
       <div>
         <div className="text-6xl font-extrabold mb-[30px]">
-          {winner
+          {/* {winner
             ? `${winner.FirstName} ${winner.LastName}`
-            : Payload.Event.Name}
+            : Payload.Event.Name} */}
         </div>
-        {/* <div className="text-6xl font-extrabold mb-[30px]">
+        <div className="text-6xl font-extrabold mb-[30px]">
           {winner
             ? `${winner.firstName} ${winner.lastName}`
             : Payload.Event.Name}
-        </div> */}
+        </div>
       </div>
       {!isStart ? (
         <>

@@ -18,9 +18,9 @@ export default function Menu({
 }) {
   const saveData = async () => {
     // fetch data from database
-    //let payload = await FetchDatabase();
-    //console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
-    localStorage.setItem("activeList", JSON.stringify(Payload.Attendees));
+    let payload = await FetchDatabase();
+    console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
+    localStorage.setItem("activeList", JSON.stringify(payload.attendees));
     localStorage.setItem("winnersList", JSON.stringify([]));
     localStorage.setItem("prizeList", JSON.stringify([]));
   };

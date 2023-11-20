@@ -58,8 +58,8 @@ function App() {
         ++displayed + " - " + _winner.firstName + " " + _winner.lastName
       );
 
-      _alreadyDisplayed.push(_winner.Id);
-      //_alreadyDisplayed.push(_winner.id);
+      //_alreadyDisplayed.push(_winner.Id);
+      _alreadyDisplayed.push(_winner.id);
 
       setWinner(_winner);
       // increment the delay overtime
