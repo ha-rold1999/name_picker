@@ -3,13 +3,17 @@ import Winner from "./Winner";
 import Raffle from "./Raffle";
 import Prizes from "./Prizes";
 import { Payload } from "./Data";
+import AddPrize from "./AddPrize";
 
 function App() {
   const data = JSON.parse(localStorage.getItem("activeList"));
   const names = data ? [...data] : [];
-  const prizes = ["iPhone", "TV", "House & Lot"];
+  const prizes = JSON.parse(localStorage.getItem("prizeList"));
+  const durations = [50, 60, 80, 100];
 
   const [winner, setWinner] = useState(undefined);
+  const [addPrize, setAddPrize] = useState(false);
+  const [limiter, setLimit] = useState(0);
   const [isStart, setIsStart] = useState(false);
   const [won, setWon] = useState(false);
   const [showWinner, setShowWinner] = useState(false);
@@ -27,7 +31,7 @@ function App() {
     // 50 - ~6.2 seconds
     // 60 - ~8.5 seconds
     // 80 - ~14.3 seconds
-    let limit = 60;
+    let limit = limiter;
 
     for (let time = 10; time < 10000; time += 4) {
       if (limit-- == 0) break;
@@ -52,24 +56,8 @@ function App() {
     SFX_WIN.pause();
     SFX_WIN.currentTime = 0;
     await sleep(500);
-    // let incOvertime = 100;
-    // const interval = setInterval(async () => {
-    //   let _winner = names[Math.floor(Math.random() * names.length)];
-    //   setWinner(_winner);
-    // }, 100);
 
     startRaffle();
-
-    // Stop the interval after 5 seconds
-    // const duration = setTimeout(() => {
-    //   clearInterval(interval);
-    //   setIsStart(false);
-    //   setWon(true);
-    //   console.log(winner);
-    // }, 5000);
-    // return () => {
-    //   clearTimeout(duration);
-    // };
   };
 
   const Reset = () => {
@@ -93,16 +81,9 @@ function App() {
     <div
       className={
         "h-screen flex bg-green-200 justify-center items-center flex-col"
-      }>
-      {prize.length == 0 ? (
-        <Prizes
-          setPrize={setPrize}
-          prizes={prizes}
-          attendies={names.length}
-          setRefresh={setRefresh}
-          refresh={refresh}
-        />
-      ) : (
+      }
+    >
+      {prize.length > 0 && limiter > 0 ? (
         <>
           {showWinner ? (
             <Winner
@@ -117,7 +98,9 @@ function App() {
               <button
                 onClick={() => {
                   setPrize("");
-                }}>
+                  setLimit(0);
+                }}
+              >
                 Set New Pize
               </button>
               <div>{prize}</div>
@@ -133,6 +116,29 @@ function App() {
                 <div>No Participants</div>
               )}
             </>
+          )}
+        </>
+      ) : (
+        <>
+          <button
+            onClick={() => {
+              setAddPrize(!addPrize);
+            }}
+          >
+            {!addPrize ? "Add Prize" : "Go back to menu"}
+          </button>
+          {!addPrize ? (
+            <Prizes
+              setPrize={setPrize}
+              setLimit={setLimit}
+              durations={durations}
+              prizes={prizes}
+              attendies={names.length}
+              setRefresh={setRefresh}
+              refresh={refresh}
+            />
+          ) : (
+            <AddPrize />
           )}
         </>
       )}
