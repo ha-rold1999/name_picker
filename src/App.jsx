@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
-import Winner from "./Winner";
-import Raffle from "./Raffle";
-import Prizes from "./Prizes";
-import { Payload } from "./Data";
-import AddPrize from "./AddPrize";
+import Menu from "./Menu";
+import Random from "./Random";
 
 function App() {
   const data = JSON.parse(localStorage.getItem("activeList"));
@@ -60,12 +57,6 @@ function App() {
     startRaffle();
   };
 
-  const Reset = () => {
-    setWinner({
-      FirstName: Payload.Event.Name,
-    });
-  };
-
   useEffect(() => {
     if (won) {
       // Delay rendering Winner by 1 second
@@ -84,62 +75,34 @@ function App() {
       }
     >
       {prize.length > 0 && limiter > 0 ? (
-        <>
-          {showWinner ? (
-            <Winner
-              winner={winner}
-              setWinner={setWinner}
-              setShowWinner={setShowWinner}
-              prize={prize}
-              setWon={setWon}
-            />
-          ) : (
-            <>
-              <button
-                onClick={() => {
-                  setPrize("");
-                  setLimit(0);
-                }}
-              >
-                Set New Pize
-              </button>
-              <div>{prize}</div>
-              {names.length > 0 ? (
-                <Raffle
-                  winner={winner}
-                  isStart={isStart}
-                  start={start}
-                  setIsStart={setIsStart}
-                  won={won}
-                />
-              ) : (
-                <div>No Participants</div>
-              )}
-            </>
-          )}
-        </>
+        <Random
+          winner={winner}
+          setWinner={setWinner}
+          setShowWinner={setShowWinner}
+          prize={prize}
+          setWon={setWon}
+          setPrize={setPrize}
+          setLimit={setLimit}
+          names={names}
+          isStart={isStart}
+          start={start}
+          setIsStart={setIsStart}
+          won={won}
+          showWinner={showWinner}
+        />
       ) : (
         <>
-          <button
-            onClick={() => {
-              setAddPrize(!addPrize);
-            }}
-          >
-            {!addPrize ? "Add Prize" : "Go back to menu"}
-          </button>
-          {!addPrize ? (
-            <Prizes
-              setPrize={setPrize}
-              setLimit={setLimit}
-              durations={durations}
-              prizes={prizes}
-              attendies={names.length}
-              setRefresh={setRefresh}
-              refresh={refresh}
-            />
-          ) : (
-            <AddPrize />
-          )}
+          <Menu
+            setAddPrize={setAddPrize}
+            addPrize={addPrize}
+            setPrize={setPrize}
+            setLimit={setLimit}
+            durations={durations}
+            prizes={prizes}
+            names={names}
+            setRefresh={setRefresh}
+            refresh={refresh}
+          />
         </>
       )}
     </div>

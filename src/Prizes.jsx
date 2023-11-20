@@ -1,4 +1,6 @@
 import { Payload } from "./Data";
+import DurationOptions from "./DurationOptions";
+import PrizeOptions from "./PrizeOptions";
 
 /* eslint-disable react/prop-types */
 export default function Prizes({
@@ -10,12 +12,6 @@ export default function Prizes({
   setRefresh,
   refresh,
 }) {
-  const saveData = () => {
-    localStorage.setItem("activeList", JSON.stringify(Payload.Attendees));
-    localStorage.setItem("winnersList", JSON.stringify([]));
-    localStorage.setItem("prizeList", JSON.stringify([]));
-  };
-
   const refreshList = () => {
     const list = localStorage.getItem("activeList");
     const winners = localStorage.getItem("winnersList");
@@ -28,52 +24,21 @@ export default function Prizes({
   };
 
   return (
-    <div className="flex flex-col">
-      <div>{attendies}</div>
-      <select
-        onChange={(e) => {
-          setPrize(e.target.value);
-        }}
-      >
-        <option value="" disabled selected>
-          Select a Prize
-        </option>
-        {prizes &&
-          prizes.map((p, index) => (
-            <option value={p} key={index}>
-              {p}
-            </option>
-          ))}
-      </select>
-      <select
-        onChange={(e) => {
-          setLimit(e.target.value);
-        }}
-      >
-        <option value="" disabled selected>
-          Select a Duration
-        </option>
-        {durations.map((d, index) => (
-          <option value={d} key={index}>
-            {d}
-          </option>
-        ))}
-      </select>
-      <button
-        onClick={() => {
-          saveData();
-        }}
-      >
-        Get Attendies
-      </button>
-      <button
-        onClick={() => {
-          refreshList();
-        }}
-      >
-        Refresh Attendies
-      </button>
-      <div className="text-sm text-green-200">test</div>
+    <div className="flex flex-col space-y-2 items-center  w-1/2">
+      <div className="flex flex-row space-x-2">
+        <div className="text-lg font-bold">Attendies: {attendies}</div>
+        <button
+          onClick={() => {
+            refreshList();
+          }}
+          className="bg-green-300 p-1 rounded-lg"
+        >
+          Refresh Attendies
+        </button>
+      </div>
+
+      <PrizeOptions setPrize={setPrize} prizes={prizes} />
+      <DurationOptions setLimit={setLimit} durations={durations} />
     </div>
   );
 }
