@@ -24,7 +24,15 @@ export default function Prizes({
     const list = localStorage.getItem("activeList");
     const winners = localStorage.getItem("winnersList");
 
-    const refreshList = [...JSON.parse(list), ...JSON.parse(winners)];
+    const newList = [];
+    // ensure when refreshed, remove the property 'prize'
+    JSON.parse(winners).forEach((w) => {
+      let new_w = w;
+      delete new_w["prize"];
+      newList.push(new_w);
+    });
+
+    const refreshList = [...JSON.parse(list), ...newList];
 
     localStorage.setItem("activeList", JSON.stringify(refreshList));
     localStorage.setItem("winnersList", JSON.stringify([]));
@@ -34,14 +42,14 @@ export default function Prizes({
   return (
     <div className="flex flex-col space-y-2 items-center  w-1/2">
       <div className="flex flex-row space-x-2">
-        <div className="text-lg font-bold">Attendies: {attendies}</div>
+        <div className="text-lg font-bold">Attendees: {attendies}</div>
         <button
           onClick={() => {
             refreshList();
           }}
           className="bg-green-300 p-1 rounded-lg"
         >
-          Refresh Attendies
+          Refresh Attendees
         </button>
       </div>
 

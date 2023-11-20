@@ -2,6 +2,7 @@ import React from "react";
 import Prizes from "./Prizes";
 import AddPrize from "./AddPrize";
 import { Payload } from "./Data";
+import { FetchDatabase } from "./Util/Database";
 
 export default function Menu({
   setAddPrize,
@@ -14,8 +15,11 @@ export default function Menu({
   setRefresh,
   refresh,
 }) {
-  const saveData = () => {
-    localStorage.setItem("activeList", JSON.stringify(Payload.Attendees));
+  const saveData = async () => {
+    // fetch data from database
+    let payload = await FetchDatabase();
+    console.log(`Retrieved from API: ${JSON.stringify(payload)}`);
+    localStorage.setItem("activeList", JSON.stringify(payload.attendees));
     localStorage.setItem("winnersList", JSON.stringify([]));
     localStorage.setItem("prizeList", JSON.stringify([]));
   };

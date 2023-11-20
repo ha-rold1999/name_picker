@@ -28,7 +28,7 @@ function App() {
     // 50 - ~6.2 seconds
     // 60 - ~8.5 seconds
     // 80 - ~14.3 seconds
-    let limit = 200; // displayed on screen
+    let limit = limiter; // displayed on screen
     let divisibleBy2 = 0;
     let divisibleBy2_2 = 0;
     let displayed = 0;

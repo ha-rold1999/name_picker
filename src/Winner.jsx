@@ -16,12 +16,15 @@ export default function Winner({
   const [names, setName] = useState([...data]);
 
   const restart = () => {
+    // before restart, save the 'winner' in the database
+    // TODO: call upload function
     setName((names) => {
       // Use the previous state to avoid potential issues with async updates
       const updatedNames = names.filter((name) => name.id !== winner.id);
 
       // Update local storage with the filtered names
       localStorage.setItem("activeList", JSON.stringify(updatedNames));
+      winner.prize = prize;
       const winners = [
         ...JSON.parse(localStorage.getItem("winnersList")),
         winner,
