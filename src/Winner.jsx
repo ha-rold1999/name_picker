@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Confetti from "react-confetti";
 import { Payload } from "./Data";
+import { SaveWinner } from "./Util/Database";
 
 export default function Winner({
   winner,
@@ -18,6 +19,7 @@ export default function Winner({
   const restart = () => {
     // before restart, save the 'winner' in the database
     // TODO: call upload function
+    SaveWinner(winner.id, prize);
     setName((names) => {
       // Use the previous state to avoid potential issues with async updates
       const updatedNames = names.filter((name) => name.id !== winner.id);
