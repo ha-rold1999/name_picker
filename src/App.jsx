@@ -7,10 +7,12 @@ function App() {
   const names = data ? [...data] : [];
   const prizes = JSON.parse(localStorage.getItem("prizeList"));
   const durations = [
-    { time: 5, duration: 50 },
-    { time: 10, duration: 70 },
-    { time: 15, duration: 90 },
-    { time: 20, duration: 110 },
+    { time: 5, duration: 55 },
+    { time: 10, duration: 110 },
+    { time: 15, duration: 160 },
+    { time: 20, duration: 200 },
+    { time: 25, duration: 230 },
+    { time: 30, duration: 270 },
   ];
 
   const [getNames, setGetNames] = useState(false);
@@ -41,11 +43,11 @@ function App() {
     let displayed = 0;
     let _alreadyDisplayed = [];
 
-    for (let time = 100; time < 10000; time) {
+    for (let time = 70; time < 10000; time) {
       let _winner = names[Math.floor(Math.random() * names.length)];
       // check if the previous winner is currently selected in random
       //if (winner === _winner) continue;
-      if (_alreadyDisplayed.includes(_winner.Id)) {
+      if (_alreadyDisplayed.includes(_winner.id)) {
         // check if _alreadyDisplayed is full, if yes, reset.
         if (_alreadyDisplayed.length === names.length) {
           _alreadyDisplayed = [];
@@ -65,8 +67,8 @@ function App() {
         ++displayed + " - " + _winner.firstName + " " + _winner.lastName
       );
 
-      _alreadyDisplayed.push(_winner.Id);
-      //_alreadyDisplayed.push(_winner.id);
+      //_alreadyDisplayed.push(_winner.Id);
+      _alreadyDisplayed.push(_winner.id);
 
       setWinner(_winner);
       // increment the delay overtime

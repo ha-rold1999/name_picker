@@ -22,8 +22,8 @@ export default function Winner({
     SaveWinner(winner.id, prize);
     setName((names) => {
       // Use the previous state to avoid potential issues with async updates
-      const updatedNames = names.filter((name) => name.Id !== winner.Id);
-      //const updatedNames = names.filter((name) => name.id !== winner.id);
+      // const updatedNames = names.filter((name) => name.Id !== winner.Id);
+      const updatedNames = names.filter((name) => name.id !== winner.id);
       // Update local storage with the filtered names
       localStorage.setItem("activeList", JSON.stringify(updatedNames));
       winner.prize = prize;
@@ -57,7 +57,7 @@ export default function Winner({
         </div>
         <div className="text-7xl font-bold pb-8 text-white">
           {winner
-            ? `${winner.FirstName} ${winner.LastName}`
+            ? `${winner.firstName} ${winner.lastName}`
             : Payload.Event.Name}
         </div>
         <div className="flex space-x-2">
