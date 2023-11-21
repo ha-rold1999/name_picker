@@ -9,9 +9,10 @@ export default function DurationOptions({ setLimit, durations }) {
           console.log(e.target.value);
           setLimit(e.target.value);
         }}
+        defaultValue="select_a_duration"
         className="w-full p-2 rounded-lg border-2 border-gray"
       >
-        <option value="" disabled selected>
+        <option value="select_a_duration" disabled>
           Select a Duration
         </option>
         {durations.map((d, index) => (

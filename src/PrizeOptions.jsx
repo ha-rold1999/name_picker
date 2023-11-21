@@ -9,8 +9,9 @@ export default function PrizeOptions({ setPrize, prizes }) {
           setPrize(e.target.value);
         }}
         className="w-full p-2 rounded-lg border-2 border-gray"
+        defaultValue="select_a_price"
       >
-        <option value="" disabled selected>
+        <option value="select_a_price" disabled>
           Select a Prize
         </option>
         {prizes &&
