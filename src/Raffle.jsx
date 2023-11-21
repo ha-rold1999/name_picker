@@ -13,7 +13,7 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
         </div>
         <div className="text-6xl font-extrabold mb-[30px]">
           {winner
-            ? `${winner.firstName} ${winner.lastName}`
+            ? `${winner.FirstName} ${winner.LastName}`
             : Payload.Event.Name}
         </div>
       </div>
