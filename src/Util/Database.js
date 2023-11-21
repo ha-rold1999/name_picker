@@ -24,3 +24,23 @@ export const SaveWinner = async (attendeeId, prize) => {
       console.log("Winner Saved to database: " + d.message);
     });
 };
+
+export const GetWinners = async () => {
+  let arr = [];
+  await fetch(`${apiUrl}/Events/1/rafflewinners`, {
+    method: "GET",
+  })
+    .then((r) => r.json())
+    .then((d) => {
+      d.raffleWinners.forEach((winner) => {
+        arr.push({
+          companyId: winner.attendee.companyId,
+          lastName: winner.attendee.lastName,
+          firstName: winner.attendee.firstName,
+          email: winner.attendee.email,
+          prize: winner.prize,
+        });
+      });
+    });
+  return arr;
+};
