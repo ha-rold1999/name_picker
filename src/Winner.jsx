@@ -41,6 +41,12 @@ export default function Winner({
     setShowWinner(false);
     setWinner(undefined);
   };
+
+  const reshuffle = () => {
+    setWon(false);
+    setShowWinner(false);
+    setWinner(undefined);
+  };
   return (
     <>
       <Confetti />
@@ -56,6 +62,12 @@ export default function Winner({
           onClick={() => restart()}
         >
           Next
+        </button>
+        <button
+          className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold"
+          onClick={() => reshuffle()}
+        >
+          Reshuffle
         </button>
       </div>
     </>
