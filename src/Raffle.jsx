@@ -32,7 +32,7 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
           )}
         </>
       ) : (
-        <div>Running</div>
+        <div>Rolling</div>
       )}
     </div>
   );
