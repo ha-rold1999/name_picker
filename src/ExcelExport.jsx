@@ -1,6 +1,7 @@
 import React from "react";
 import * as XLSX from "xlsx";
 import * as FileSaver from "file-saver";
+import download from "./assets/downloads.png";
 
 export default function ExcelExport() {
   const winners = JSON.parse(localStorage.getItem("winnersList"));
@@ -22,8 +23,10 @@ export default function ExcelExport() {
       onClick={() => {
         exportToExcel();
       }}
+      className="flex justify-center items-center bg-secondary p-2 rounded-md space-x-2"
     >
-      Download Winners
+      <img src={download} className="w-5" />
+      <div className="text-white">Download Winners</div>
     </button>
   );
 }

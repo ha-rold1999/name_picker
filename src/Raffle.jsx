@@ -11,7 +11,7 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
             ? `${winner.FirstName} ${winner.LastName}`
             : Payload.Event.Name} */}
         </div>
-        <div className="text-6xl font-extrabold mb-[30px]">
+        <div className="text-6xl font-extrabold mb-[30px] text-white">
           {winner
             ? `${winner.FirstName} ${winner.LastName}`
             : Payload.Event.Name}
@@ -21,7 +21,7 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
         <>
           {!won && (
             <button
-              className="bg-green-500 px-10 py-1 text-lg text-white rounded-lg font-bold"
+              className="bg-orange px-10 py-1 text-lg text-white rounded-lg font-bold"
               onClick={() => {
                 start();
                 setIsStart(true);
@@ -32,7 +32,7 @@ export default function Raffle({ winner, isStart, start, setIsStart, won }) {
           )}
         </>
       ) : (
-        <div>Rolling</div>
+        <div className="text-xl text-white">Drawing Winner...</div>
       )}
     </div>
   );

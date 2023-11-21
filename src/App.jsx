@@ -10,9 +10,11 @@ function App() {
     { time: 5, duration: 50 },
     { time: 10, duration: 70 },
     { time: 15, duration: 90 },
-    { time: 20, duration: 100 },
+    { time: 20, duration: 110 },
   ];
 
+  const [getNames, setGetNames] = useState(false);
+  const [isStartRaffle, setIsStartRaffle] = useState(false);
   const [winner, setWinner] = useState(undefined);
   const [addPrize, setAddPrize] = useState(false);
   const [limiter, setLimit] = useState(0);
@@ -101,11 +103,10 @@ function App() {
 
   return (
     <div
-      className={
-        "h-screen flex bg-green-200 justify-center items-center flex-col"
-      }
+      className={"h-screen flex bg-green justify-center items-center flex-col"}
     >
-      {prize.length > 0 && limiter > 0 ? (
+      {/*prize.length > 0 && limiter > 0  */}
+      {isStartRaffle ? (
         <Random
           winner={winner}
           setWinner={setWinner}
@@ -120,6 +121,7 @@ function App() {
           setIsStart={setIsStart}
           won={won}
           showWinner={showWinner}
+          setIsStartRaffle={setIsStartRaffle}
         />
       ) : (
         <>
@@ -133,6 +135,10 @@ function App() {
             names={names}
             setRefresh={setRefresh}
             refresh={refresh}
+            setGetNames={setGetNames}
+            prize={prize}
+            limiter={limiter}
+            setIsStartRaffle={setIsStartRaffle}
           />
         </>
       )}

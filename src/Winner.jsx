@@ -51,24 +51,29 @@ export default function Winner({
     <>
       <Confetti />
       <div className="flex flex-col justify-center items-center space-y-1">
-        <div className="text-2xl font-bold">{prize} Winner</div>
-        <div className="text-7xl font-bold pb-8">
+        <div className=" bg-white px-4 py-2 rounded-sm drop-shadow-xl items-center flex flex-col mb-10">
+          <div className="text-green">Raffle Prize</div>
+          <div className="text-2xl font-bold text-green">{prize}</div>
+        </div>
+        <div className="text-7xl font-bold pb-8 text-white">
           {winner
             ? `${winner.FirstName} ${winner.LastName}`
             : Payload.Event.Name}
         </div>
-        <button
-          className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold"
-          onClick={() => restart()}
-        >
-          Next
-        </button>
-        <button
-          className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold"
-          onClick={() => reshuffle()}
-        >
-          Reshuffle
-        </button>
+        <div className="flex space-x-2">
+          <button
+            className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold border-2 border-white"
+            onClick={() => reshuffle()}
+          >
+            Reshuffle
+          </button>
+          <button
+            className="bg-green-500 px-10 py-2 mt-[20px] text-lg text-white rounded-lg font-bold bg-orange"
+            onClick={() => restart()}
+          >
+            Save
+          </button>
+        </div>
       </div>
     </>
   );

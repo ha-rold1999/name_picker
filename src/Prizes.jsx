@@ -9,44 +9,30 @@ export default function Prizes({
   setLimit,
   durations,
   prizes,
-  attendies,
-  setRefresh,
-  refresh,
+  prize,
+  limiter,
+  setIsStartRaffle,
 }) {
-  const refreshList = () => {
-    const list = localStorage.getItem("activeList");
-    const winners = localStorage.getItem("winnersList");
-
-    const newList = [];
-    // ensure when refreshed, remove the property 'prize'
-    JSON.parse(winners).forEach((w) => {
-      let new_w = w;
-      delete new_w["prize"];
-      newList.push(new_w);
-    });
-
-    const refreshList = [...JSON.parse(list), ...newList];
-
-    localStorage.setItem("activeList", JSON.stringify(refreshList));
-    setRefresh(!refresh);
-  };
-
   return (
-    <div className="flex flex-col space-y-2 items-center  w-1/2">
-      <div className="flex flex-row space-x-2">
-        <div className="text-lg font-bold">Attendees: {attendies}</div>
-        <button
-          onClick={() => {
-            refreshList();
-          }}
-          className="bg-green-300 p-1 rounded-lg"
-        >
-          Refresh Attendees
-        </button>
+    <div className="flex flex-col space-y-3 items-center  w-1/4 bg-white p-4 rounded-lg">
+      <div className="flex flex-col w-full">
+        <div className="text-2xl font-bold">Select Prize</div>
+        <div className="text-xs text-grey">
+          Choose a prize and the duration of the raffle draw.
+        </div>
       </div>
 
       <PrizeOptions setPrize={setPrize} prizes={prizes} />
       <DurationOptions setLimit={setLimit} durations={durations} />
+      <button
+        className={`bg-button w-full py-2 text-white rounded-md ${
+          prize.length > 0 && limiter > 0 ? "bg-button" : "bg-grey"
+        }`}
+        disabled={!(prize.length > 0 && limiter > 0)}
+        onClick={() => setIsStartRaffle(true)}
+      >
+        Start Raffle
+      </button>
     </div>
   );
 }
