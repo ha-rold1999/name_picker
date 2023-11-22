@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function AddPrize() {
   const [prize, setPrize] = useState("");
@@ -8,8 +9,15 @@ export default function AddPrize() {
     console.log(getPrize);
     const newPrizes = [...JSON.parse(getPrize), prize];
     localStorage.setItem("prizeList", JSON.stringify(newPrizes));
-    alert("New Prize Saved!!!");
     setPrize("");
+
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Prize Saved!!!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

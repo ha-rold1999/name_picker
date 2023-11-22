@@ -8,6 +8,7 @@ import fsLogo from "./assets/fs-logo-white.png";
 import people from "./assets/user.png";
 import refreshIcon from "./assets/sync.png";
 import add from "./assets/plus.png";
+import Swal from "sweetalert2";
 
 export default function Menu({
   setAddPrize,
@@ -50,6 +51,22 @@ export default function Menu({
     localStorage.setItem("activeList", JSON.stringify(refreshList));
     localStorage.setItem("winnersList", JSON.stringify([]));
     setRefresh(!refresh);
+  };
+
+  const confirmRefresh = () => {
+    Swal.fire({
+      title: "Refresh List?",
+      text: "Add all the winners back to list",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#FFAD33",
+      cancelButtonColor: "#888888",
+      confirmButtonText: "Confirm",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        refreshList();
+      }
+    });
   };
 
   return (
@@ -100,7 +117,7 @@ export default function Menu({
             </div>
             <button
               onClick={() => {
-                refreshList();
+                confirmRefresh();
               }}
             >
               <img src={refreshIcon} className="w-7" />
