@@ -1,17 +1,18 @@
 const apiUrl = "https://localhost:7229/api/v1";
 export const FetchDatabase = async () => {
   let Payload = {};
-  await fetch(`${apiUrl}/Events/1/rafflegenerate`)
+  await fetch(`${apiUrl}/Events/2/rafflegenerate`)
     .then((r) => r.json())
     .then((d) => {
       Payload = d;
+      console.log("Downloaded attendees from server");
     });
 
   return Payload;
 };
 
 export const SaveWinner = async (attendeeId, prize) => {
-  await fetch(`${apiUrl}/Events/1/rafflewinners`, {
+  await fetch(`${apiUrl}/Events/2/rafflewinners`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
@@ -27,7 +28,7 @@ export const SaveWinner = async (attendeeId, prize) => {
 
 export const GetWinners = async () => {
   let arr = [];
-  await fetch(`${apiUrl}/Events/1/rafflewinners`, {
+  await fetch(`${apiUrl}/Events/2/rafflewinners`, {
     method: "GET",
   })
     .then((r) => r.json())
